@@ -46,7 +46,7 @@ export default function DropdownWrapper({
         }
     }, [animate, visible]);
 
-    return ReactDOM.createPortal(
+    return (
         <div
             className={classNames("fixed z-50", {
                 "scale-100": visible && (!animate || !animating),
@@ -61,7 +61,6 @@ export default function DropdownWrapper({
             ref={rootRef}
         >
             {children}
-        </div>,
-        document.body
+        </div>
     );
 }

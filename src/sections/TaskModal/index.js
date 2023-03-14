@@ -59,6 +59,7 @@ export default forwardRef(function TaskModal({}, ref) {
                                 <AiOutlineTag />
                                 Labels
                             </button>
+                            <LabelDropdown ref={labelDropdownRef} />
                         </div>
                         <div className="flex flex-col px-5 py-10">
                             <button className="text-red-500 px-5 py-2 text-left font-medium">Delete</button>
@@ -66,8 +67,6 @@ export default forwardRef(function TaskModal({}, ref) {
                     </div>
                 </div>
             </ModalWrapper>
-
-            <LabelDropdown ref={labelDropdownRef} />
         </>
     );
 });
