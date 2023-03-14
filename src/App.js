@@ -1,13 +1,16 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import initialData from "./initialData";
 import TaskColumn from "./components/TaskColumn";
 import { DragDropContext } from "react-beautiful-dnd";
 import { cloneDeep, find, findIndex, uniqueId } from "lodash";
+import TaskModal from "./sections/TaskModal";
+import { useApp } from "./providers/AppProvider";
 
 function App() {
     const [data, setData] = useState(initialData);
+    const { taskModalRef } = useApp();
 
     const onDragEnd = (result) => {
         const { destination, source, draggableId } = result;
@@ -24,9 +27,6 @@ function App() {
         const destinationIndex = findIndex(newData, { id: destination.droppableId });
         newData[destinationIndex].tasks.splice(destination.index, 0, taskObject);
 
-        // const sourceColumn = find(data, { id: source.droppableId });
-        // const newSourceColumnTasks = Array.from(sourceColumn.tasks);
-        // newSourceColumnTasks.splice(source.index, 1);
         setData(newData);
     };
 
@@ -47,13 +47,16 @@ function App() {
     };
 
     return (
-        <div className="w-full min-h-screen flex items-start p-5 gap-x-5 bg-violet-500">
-            <DragDropContext onDragEnd={onDragEnd}>
-                {data.map((column) => (
-                    <TaskColumn key={column.id} {...column} onAddTask={() => onAddTask(column)} />
-                ))}
-            </DragDropContext>
-        </div>
+        <>
+            <div className="w-full min-h-screen flex items-start p-5 gap-x-5 bg-violet-500">
+                <DragDropContext onDragEnd={onDragEnd}>
+                    {data.map((column) => (
+                        <TaskColumn key={column.id} {...column} onAddTask={() => onAddTask(column)} />
+                    ))}
+                </DragDropContext>
+            </div>
+            <TaskModal ref={taskModalRef} />
+        </>
     );
 }
 

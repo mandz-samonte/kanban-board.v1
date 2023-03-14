@@ -5,11 +5,13 @@ import { Droppable } from "react-beautiful-dnd";
 
 export default function TaskColumn({ id, title, tasks, onAddTask }) {
     return (
-        <div className="flex flex-col w-64 bg-slate-200 p-5 gap-y-5 rounded-md">
-            <span className="text-lg font-bold py-2 px-3 hover:bg-slate-50 rounded-md cursor-pointer">{title}</span>
+        <div className="flex flex-col w-64 bg-slate-200 p-5 rounded-md">
+            <span className="text-lg font-bold py-2 px-3 hover:bg-slate-50 rounded-md cursor-pointer mb-5">
+                {title}
+            </span>
             <Droppable droppableId={id}>
                 {(provided) => (
-                    <div ref={provided.innerRef} {...provided.droppableProps} className="flex flex-col gap-y-5">
+                    <div ref={provided.innerRef} {...provided.droppableProps} className="flex flex-col">
                         {tasks.map((task, index) => (
                             <TaskCard key={task.id} index={index} {...task} />
                         ))}
